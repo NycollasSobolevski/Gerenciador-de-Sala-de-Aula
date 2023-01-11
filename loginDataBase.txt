@@ -1,0 +1,10 @@
+login
+ControleEstudantes
+pass
+ControleEstudantesPassword
+
+
+------------
+
+Porta IPAAII:
+1433
