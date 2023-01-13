@@ -2,8 +2,12 @@ const express = require('express');
 const routes = require('./routes');
 const app = express();
 app.use(express.urlencoded({ extended: true }));
+const db = require('./src/config/db')
+
 // Static files
-app.use(express.static('public'));
+
+app.use(express.static('./public'));
+
 // EJS
 app.set('views', './src/views');
 app.set('view engine', 'ejs');

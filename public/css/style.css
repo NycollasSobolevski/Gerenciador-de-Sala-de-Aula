@@ -15,7 +15,7 @@ header{
 }
 .header{
     height: 60px;
-    width: 98vw;
+    width: 95vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -203,17 +203,27 @@ main{
 
 footer{
     width: 100%;
-    position: static;
+    position: relative;
     bottom: 0px;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px black;
+    align-items: center;
 }
-footer .Content{
+footer .contentGradient{
     bottom: 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-#BoschGradient{
-    bottom: 0px;
+footer .content img{
+    width: auto;
+    height: 50px;
+    margin: 10px;
 }
+
 .BoschGradient{
     width: 100%;
-    height: 1vh;
+    height: 1.5vh;
 }
