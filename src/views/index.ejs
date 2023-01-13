@@ -46,24 +46,31 @@
 
             <select name="SelectSala" onchange="this.form.submit()" id="SelectSala" name="nome">
                 <option value="">Escolha uma Sala</option>
-                <% for(let i = 0; i < salas.length; i++){ %>
-                    <option value="<%= salas[i].IDSala %> "> <%= salas[i].Nome %> </option>
-                <% } %> 
+                <% for(let i=0; i < salas.length; i++){ %>
+                    <option value="<%= salas[i].IDSala %> ">
+                        <%= salas[i].Nome %>
+                    </option>
+                <% } %>
             </select>
         </div>
         <div id="Sala" class="Sala">
             <h2>Alunos</h2>
             <div class="AlunosNaSala">
-                <div class="AlunoCard">
-                    <div class="Profile">
-                        <img src="img/profile_avatar.jpg" alt="profileAvatar" class="ProfileAvatar">
+                <% for(let i=0; i < alunos.length; i++){ %>
+                    <div class="AlunoCard">
+                        <div class="Profile">
+                            <img src="img/<%= alunos[i].Foto %>" alt="<%= alunos[0].Foto %>" class="ProfileAvatar">
+                        </div>
+                        <div class="Info">
+                            <h3>
+                                <%= alunos[i].Nome %>
+                            </h3>
+                            <p>Idade: <%= alunos[i].Idade %>
+                            </p>
+                            <button class="Button">Editar</button>
+                        </div>
                     </div>
-                    <div class="Info">
-                        <h3>Nycollas Sobolevski</h3>
-                        <p>Idade: 18</p>
-                        <button class="Button">Editar</button>
-                    </div>
-                </div>
+                <% } %>
             </div>
         </div>
     </main>
@@ -112,9 +119,11 @@
             <div>
                 <h4>Sala:</h4>
                 <select name="SelectSala" id="" class="CaixaDados">
-                    <% for(let i = 0; i < salas.length; i++){ %>
-                       <option value="<%= salas[i].Nome %>">  <%= salas[i].Nome %>  </option> 
-                    <% } %> 
+                    <% for(let i=0; i < salas.length; i++){ %>
+                        <option value="<%= salas[i].Nome %>">
+                            <%= salas[i].Nome %>
+                        </option>
+                        <% } %>
                 </select>
             </div>
             <button>
