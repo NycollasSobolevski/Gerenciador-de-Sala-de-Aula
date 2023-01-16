@@ -35,7 +35,11 @@ module.exports = {
     async alunoInsert(req, res){
         const dados = req.body;
 
-        let foto = usuario.png;
+        let foto = 'profile_avatar.jpg';
+
+        if (req.file) {
+            foto = req.file.filename;
+        }
 
         await aluno.create({
             Nome: dados.nome,

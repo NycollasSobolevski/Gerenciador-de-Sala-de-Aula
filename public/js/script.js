@@ -41,3 +41,9 @@ photo.addEventListener('click', () =>{
             photo.src = reader.result
         }
     })
+
+
+    function ViewValue(id) {
+        idElement = document.getElementById(id)
+        console.log(idElement.value);
+    }

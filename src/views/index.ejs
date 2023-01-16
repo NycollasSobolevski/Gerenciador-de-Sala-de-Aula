@@ -43,15 +43,16 @@
     <main onclick="CleanScreen()">
         <div class="SelectSala">
             <h5>Sala de Aula</h5>
-
-            <select name="SelectSala" onchange="this.form.submit()" id="SelectSala" name="nome">
-                <option value="">Escolha uma Sala</option>
-                <% for(let i=0; i < salas.length; i++){ %>
-                    <option value="<%= salas[i].IDSala %> ">
-                        <%= salas[i].Nome %>
-                    </option>
-                <% } %>
-            </select>
+            <form method="post">
+                <select name="SelectSala" onchange="this.form.submit()" id="SelectSala">
+                    <option value="">Escolha uma Sala</option>
+                    <% for(let i=0; i < salas.length; i++){ %>
+                        <option value='<%= salas[i].IDSala %>' <%=id==salas[i].IDSala ? 'selected' : '' %>>
+                            <%= salas[i].Nome %>
+                        </option>
+                        <% } %>
+                </select>
+            </form>
         </div>
         <div id="Sala" class="Sala">
             <h2>Alunos</h2>
@@ -59,7 +60,7 @@
                 <% for(let i=0; i < alunos.length; i++){ %>
                     <div class="AlunoCard">
                         <div class="Profile">
-                            <img src="img/<%= alunos[i].Foto %>" alt="<%= alunos[0].Foto %>" class="ProfileAvatar">
+                            <img src="img/<%= alunos[i].Foto %>" alt="<%= alunos[i].Foto %>" class="ProfileAvatar">
                         </div>
                         <div class="Info">
                             <h3>
@@ -67,68 +68,77 @@
                             </h3>
                             <p>Idade: <%= alunos[i].Idade %>
                             </p>
-                            <button class="Button">Editar</button>
+                            <button class="Button" onclick="">Editar</button>
                         </div>
                     </div>
-                <% } %>
+                    <% } %>
             </div>
         </div>
     </main>
 
+    
+
+
+ 
 
     <div id="CadastroSala" class="Cadastro">
-        <div class="Content">
-            <h2>Cadastrar Nova Sala</h2>
-            <div>
-                <h4>Nome:</h4>
-                <input type="text" class="CaixaDados"></input>
+        <form action="">
+            <div class="Content">
+                <h2>Cadastrar Nova Sala</h2>
+                <div>
+                    <h4>Nome:</h4>
+                    <input type="text" class="CaixaDados"></input>
+                </div>
+                <div>
+                    <h4>Capacidade:</h4>
+                    <input type="text" class="CaixaDados"></input>
+                </div>
+                <button>
+                    <h3>Cadastrar</h3>
+                </button>
             </div>
-            <div>
-                <h4>Capacidade:</h4>
-                <input type="text" class="CaixaDados"></input>
-            </div>
-            <button>
-                <h3>Cadastrar</h3>
-            </button>
-        </div>
+        </form>
         <a href="javascript: FecharCadastro('CadastroSala')"><button>
                 <h3>Fechar</h3>
             </button></a>
+
     </div>
 
     <div id="CadastroAluno" class="Cadastro">
         <div class="Content">
-            <h2>Cadastrar Novo Aluno</h2>
-            <img src="img/profile_avatar.jpg" alt="ProfileImg" class="ProfileAvatar" id="ProfileAvatar">
-            <input type="file" id="flImage" name="foto" accept="image/*">
-            <div>
-                <h4>Nome:</h4>
-                <input type="text" class="CaixaDados"></input>
-            </div>
-            <div>
-                <h4>Idade:</h4>
-                <input type="text" class="CaixaDados"></input>
-            </div>
-            <div>
-                <h4>Sexo:</h4>
-                <select name="Genero" id="Genero" class="CaixaDados">
-                    <option value="Masculino">Masculino</option>
-                    <option value="Feminino">Feminino</option>
-                </select>
-            </div>
-            <div>
-                <h4>Sala:</h4>
-                <select name="SelectSala" id="" class="CaixaDados">
-                    <% for(let i=0; i < salas.length; i++){ %>
-                        <option value="<%= salas[i].Nome %>">
-                            <%= salas[i].Nome %>
-                        </option>
-                        <% } %>
-                </select>
-            </div>
-            <button>
-                <h3>Cadastrar</h3>
-            </button>
+            <form action="/cadastroAluno" method="post" enctype="multipart/form-data">
+                <h2>Cadastrar Novo Aluno</h2>
+                <img src="img/profile_avatar.jpg" alt="ProfileImg" class="ProfileAvatar" id="ProfileAvatar">
+                <input type="file" id="flImage" name="foto" accept="image/*">
+                <div>
+                    <h4>Nome:</h4>
+                    <input type="text" class="CaixaDados" name="nome"></input>
+                </div>
+                <div>
+                    <h4>Idade:</h4>
+                    <input type="text" class="CaixaDados" name="idade"></input>
+                </div>
+                <div>
+                    <h4>Sexo:</h4>
+                    <select id="Genero" class="CaixaDados" name="sexo">
+                        <option value="Masculino">Masculino</option>
+                        <option value="Feminino">Feminino</option>
+                    </select>
+                </div>
+                <div>
+                    <h4>Sala:</h4>
+                    <select name="sala" id="" class="CaixaDados">
+                        <% for(let i=0; i < salas.length; i++){ %>
+                            <option value="<%= salas[i].IDSala %>">
+                                <%= salas[i].Nome %>
+                            </option>
+                            <% } %>
+                    </select>
+                </div>
+                <button type="submit">
+                    <h3>Cadastrar</h3>
+                </button>
+            </form>
         </div>
         <a href="javascript: FecharCadastro('CadastroAluno')"><button>
                 <h3>Fechar</h3>

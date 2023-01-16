@@ -1,10 +1,9 @@
 const sala = require('../model/sala');
 const aluno = require('../model/aluno');
-const { sala } = require('./cadastro');
 
 module.exports = {
     async pagInicialGet(req, res) {
-        const id = req.body.nome;
+        const id = req.body.SelectSala;
 
         const salas = await sala.findAll({
             raw: true,  // Retorna somente os valores de uma tabela, sem metadados
@@ -20,21 +19,19 @@ module.exports = {
     },
 
     async pagInicialPost(req, res){
-        const id = req.body.nome;
+        const id = req.body.SelectSala;
 
         const alunos = await aluno.findAll({
             raw: true,
-            atributes: ['IDAluno', 'Nome','Idade','Foto'],
+            atributes: ['IDAluno', 'Nome','Idade','Foto', 'IDSala'],
             where: {IDSala: id}
-        });''
+        });
 
-        const sala = await sala.findAll({
+        const salas = await sala.findAll({
             raw:true,
             atributes: ['IDSala','Nome']
         });
 
         res.render('../views/index.ejs', {salas, alunos, id})
     }
-
-    
 }
