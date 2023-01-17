@@ -17,12 +17,15 @@ route.get('/', home.pagInicialGet);
 route.post('/', home.pagInicialPost);
 
 route.get('/', cadastro.sala);
-route.post('/', cadastro.salaInsert);
+route.post('/cadastroSala', cadastro.salaInsert);
 
 route.get('/', cadastro.aluno);
 route.post('/cadastroAluno', multer(config).single('foto'), cadastro.alunoInsert);
 
 route.get('/editarAluno/:id', editar.alunos);
 route.post('/editarAluno/:id', multer(config).single('foto'), editar.adicionar);
+
+route.get('/editarSalas/:id', editar.salas);
+route.post('/editarSalas/:id', editar.salasUpdate);
 
 module.exports = route;

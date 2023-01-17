@@ -7,15 +7,17 @@ module.exports = {
 
         const salas = await sala.findAll({
             raw: true,  // Retorna somente os valores de uma tabela, sem metadados
-            atributes: ['IDSala', 'Nome']
+            atributes: ['IDSala', 'Nome', 'Capacidade']
         });
 
         const alunos = await aluno.findAll({
             raw: true,
             atributes: ['Nome', 'Idade', 'Foto', 'IDSala']
         });
+
+    
         // renderizando as salas para o front
-        res.render('../views/index.ejs', {salas, alunos:'', id:''})
+        res.render('../views/index.ejs', {salas, alunos:'', id:'', });
     },
 
     async pagInicialPost(req, res){
@@ -24,14 +26,15 @@ module.exports = {
         const alunos = await aluno.findAll({
             raw: true,
             atributes: ['IDAluno', 'Nome','Idade','Foto', 'IDSala'],
-            where: {IDSala: id}
+            where: {IDSala: id},
         });
+
 
         const salas = await sala.findAll({
             raw:true,
-            atributes: ['IDSala','Nome']
+            atributes: ['IDSala','Nome', 'Capacidade']
         });
 
-        res.render('../views/index.ejs', {salas, alunos, id})
+        res.render('../views/index.ejs', { salas, alunos, id, });
     }
 }
