@@ -3,10 +3,10 @@ function AbrirCadastro(id) {
     document.getElementById(id).style.display = 'flex'
     var elemento = document.getElementById(id)
     if(elemento.style.display == 'none') {
-        document.getElementById('Sala').classList.remove('Blur')
+        document.getElementById('main').classList.remove('Blur')
     }
     if(elemento.style.display == 'flex') {
-        document.getElementById('Sala').classList.add('Blur')
+        document.getElementById('main').classList.add('Blur')
     }
 }
 function FecharCadastro(id) {
@@ -16,7 +16,7 @@ function FecharCadastro(id) {
 function CleanScreen() {
     document.getElementById('CadastroAluno').style.display = 'none'
     document.getElementById('CadastroSala').style.display = 'none'
-    document.getElementById('Sala').classList.remove('Blur');
+    document.getElementById('main').classList.remove('Blur');
 }
 
 
@@ -27,23 +27,33 @@ photo.addEventListener('click', () =>{
     file.click();
 });
 
-    file.addEventListener('change',() => {
-        if(file.files.lenght == 0)
-        {
-            return;
-        }
-
-        let reader = new FileReader();
-
-        reader.readAsDataURL(file.files[0]);
-
-        reader.onload = () => {
-            photo.src = reader.result
-        }
-    })
-
-
-    function ViewValue(id) {
-        idElement = document.getElementById(id)
-        console.log(idElement.value);
+file.addEventListener('change',() => {
+    if(file.files.lenght == 0)
+    {
+        return;
     }
+
+    let reader = new FileReader();
+
+    reader.readAsDataURL(file.files[0]);
+
+    reader.onload = () => {
+        photo.src = reader.result
+    }
+})
+
+
+function ViewValue(id) {
+    idElement = document.getElementById(id)
+}
+
+function getAge(date) {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+
+    const sla = new Date(date);
+    sla = sla.getFullYear();
+
+
+    return sla - currentYear
+}

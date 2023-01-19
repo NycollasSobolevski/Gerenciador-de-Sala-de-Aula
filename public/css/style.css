@@ -79,6 +79,7 @@ header{
 
 
 main{
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,7 +91,9 @@ main{
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    font-family: 'Oswald', sans-serif;;
 }
+
 #SelectSala{
     background-color: transparent;
     width: 100px;
@@ -104,6 +107,10 @@ main{
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    font-family: 'Oswald', sans-serif;;
+}
+.dadosSala p{
+    margin-top: 5px;
 }
 .dadosSala div{
     display: flex;
@@ -167,6 +174,10 @@ main{
     height: 30px;
     border-radius: 10px;
 }
+button:hover{
+    scale: 1.05;
+    cursor: pointer;
+}
 .Blur{
     filter: blur(3px);
 }
@@ -215,6 +226,8 @@ main{
     border: 2px;
     border-radius: 5px;
     border-style: solid;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 .Cadastro button{
     box-shadow: 0px 0px 10px black;

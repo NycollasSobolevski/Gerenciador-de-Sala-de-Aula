@@ -10,31 +10,75 @@ module.exports = {
             atributes: ['IDSala', 'Nome', 'Capacidade']
         });
 
-        const alunos = await aluno.findAll({
+        let alunos = await aluno.findAll({
             raw: true,
-            atributes: ['Nome', 'Idade', 'Foto', 'IDSala']
+            atributes: ['Nome', 'Nascimento', 'Foto', 'IDSala']
         });
+        alunos = alunos.map(aluno => {
+            const date = new Date();
+            const sla = new Date(aluno.Nascimento);
 
-    
+            const dias = (date - sla) / 86400000
+            const anos = dias / 365
+            aluno.Idade = Math.round(anos)
+
+            return aluno
+        })
+
         // renderizando as salas para o front
-        res.render('../views/index.ejs', {salas, alunos:'', id:'', });
+        res.render('../views/index.ejs', {salas, alunos, id:'',salaSelecionada:'', frase:''});
     },
 
     async pagInicialPost(req, res){
         const id = req.body.SelectSala;
-
-        const alunos = await aluno.findAll({
-            raw: true,
-            atributes: ['IDAluno', 'Nome','Idade','Foto', 'IDSala'],
-            where: {IDSala: id},
-        });
-
 
         const salas = await sala.findAll({
             raw:true,
             atributes: ['IDSala','Nome', 'Capacidade']
         });
 
-        res.render('../views/index.ejs', { salas, alunos, id, });
+        const salaSelecionada = await sala.findAll({
+            raw: true,
+            atributes: ['IDSala','Nome', 'Capacidade'],
+            where: {IDSala: id}
+        })
+
+        if (id!="") {
+            let alunos = await aluno.findAll({
+                raw: true,
+                atributes: ['IDAluno', 'Nome','Nascimento','Foto', 'IDSala'],
+                where: {IDSala: id},
+            });
+            alunos = alunos.map(aluno => {
+                const date = new Date();
+                const sla = new Date(aluno.Nascimento);
+    
+                const dias = (date - sla) / 86400000;
+                const anos = dias / 365;
+                aluno.Idade = Math.round(anos);
+    
+                return aluno;
+            });
+    
+            res.render('../views/index.ejs', { salas, salaSelecionada, alunos, id, frase:''});
+        }
+        let alunos = await aluno.findAll({
+            raw: true,
+            atributes: ['IDAluno', 'Nome','Nascimento','Foto', 'IDSala'],
+        });
+
+        
+        alunos = alunos.map(aluno => {
+            const date = new Date();
+            const sla = new Date(aluno.Nascimento);
+
+            const dias = (date - sla) / 86400000;
+            const anos = dias / 365;
+            aluno.Idade = Math.round(anos);
+
+            return aluno;
+        });
+
+        res.render('../views/index.ejs', { salas, salaSelecionada, alunos, id, frase:''});
     }
 }

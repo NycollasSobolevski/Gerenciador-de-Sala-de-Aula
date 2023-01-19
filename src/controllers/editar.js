@@ -5,11 +5,11 @@ const aluno = require('../model/aluno');
 module.exports = {
     async alunos(req, res) {
         const parametro = req.params.id;
-
+        const idSala = req.body.sala
         const alunos = await aluno.findByPk(parametro, {
             raw: true,
-            attributes: ['IDAluno', 'Nome', 'Idade', 'Sexo', 'Foto', 'IDSala']
-        });'
+            attributes: ['IDAluno', 'Nome', 'Nascimento', 'Sexo', 'Foto', 'IDSala']
+        });
 
         const salas = await sala.findAll({
             raw: true,
@@ -17,6 +17,16 @@ module.exports = {
         });
 
         res.render('../views/editarAluno', { salas, alunos });
+    },
+
+    async excluirAluno(req, res){
+        const id = req.params.id;
+
+        aluno.destroy({
+            where: {IDAluno: id}
+        });
+
+        res.redirect('/');
     },
 
     async adicionar(req, res) {
@@ -47,7 +57,7 @@ module.exports = {
 
         await aluno.update({
             Nome: dados.nome,
-            Idade: dados.idade,
+            Nascimento: dados.nascimento,
             Sexo: dados.sexo,
             IDSala: dados.sala
         },
@@ -66,7 +76,7 @@ module.exports = {
 
         const salas = await sala.findByPk(id,{
             raw: true,
-            attributes: ['IDSala', 'Nome', 'Capacidade']
+            attributes: ['IDSala', 'Nome', 'Capacidade','IdadeMinima','IdadeMaxima']
         });
 
         res.render('../views/editarSalas', { salas });
@@ -78,14 +88,29 @@ module.exports = {
 
         await sala.update({
             Nome: dados.nome,
-            Capacidade: dados.capacidade
+            Capacidade: dados.capacidade,
+            IdadeMinima: dados.idadeMinima,
+            IdadeMaxima: dados.idadeMaxima
         },
         {
             where: { IDSala: id}
         });
-
-
-
         res.redirect('/');
-    }
+    },
+
+    async excluirSala(req, res){
+        const id = req.params.id;
+        const alunos = await aluno.findAll({
+            raw:true,
+            params: ['IDAluno','IDSala'],
+            where: {IDSala: id}
+            }
+        )
+        if (alunos.count == 0) {
+            sala.destroy({
+                where: {IDSala: id}
+            });
+            res.redirect('/');
+        }
+    },
 }

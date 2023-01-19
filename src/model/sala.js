@@ -17,6 +17,14 @@ const sala = database.define('Sala', {
     Capacidade:{
         type: Sequelize.INTEGER,
         allowNull: false
+    },
+    IdadeMinima:{
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    IdadeMaxima:{
+        type: Sequelize.INTEGER,
+        allowNull: false
     }
 });
 

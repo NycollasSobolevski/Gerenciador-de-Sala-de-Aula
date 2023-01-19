@@ -28,45 +28,58 @@
         </div>
     </header>
 
-<main>
-    <div class="Cadastro" style="display: flex;">
-        <div class="Content">
-            <h2>Alterar Aluno</h2>
-            <form action="/editarAluno/<%= alunos.IDAluno %>" method="post" enctype="multipart/form-data">
-                <img src="/img/<%= alunos.Foto %>" alt="Selecione uma imagem" class="ProfileAvatar" id="ProfileAvatar">
-                <input type="file" id="flImage" name="foto" accept="image/*">
-                <div>
-                    <h4>Nome:</h4>
-                    <input type="text" class="CaixaDados"  value="<%= alunos.Nome %>" name="nome">
-                </div>
-                <div>
-                    <h4>Idade:</h4>
-                    <input type="text"  class="CaixaDados" value="<%= alunos.Idade %>" name="idade">
-                </div>
-                <div>
-                    <h4>Sexo:</h4>
-                    <select id="Genero" class="CaixaDados" name="sexo">
-                        <option value="Masculino" <%=alunos.Sexo=='Masculino' ? 'selected' : '' %>>Masculino</option>
-                        <option value="Feminino" <%=alunos.Sexo=='Feminino' ? 'selected' : '' %>>Feminino</option>
-                    </select>
-                </div>
-                <div>
-                    <h4>Sala:</h4>
-                    <select name="sala" id="" class="CaixaDados">
-                        <% for(let i=0; i < salas.length; i++){ %>
-                            <option value="<%= salas[i].IDSala %>">
-                                <%= salas[i].Nome %>
+    <main>
+        <div class="Cadastro" style="display: flex;">
+            <div class="Content">
+                <h2>Alterar Aluno</h2>
+                <form action="/editarAluno/<%= alunos.IDAluno %>" method="post" enctype="multipart/form-data">
+                    <img src="/img/<%= alunos.Foto %>" alt="Selecione uma imagem" class="ProfileAvatar"
+                        id="ProfileAvatar">
+                    <input type="file" id="flImage" name="foto" accept="image/*">
+                    <div>
+                        <h4>Nome:</h4>
+                        <input type="text" class="CaixaDados" value="<%= alunos.Nome %>" name="nome">
+                    </div>
+                    <div>
+                        <h4>Nascimento:</h4>
+                        <input type="date" class="CaixaDados" value="<%= alunos.Nascimento %>" name="nascimento">
+                    </div>
+                    <div>
+                        <h4>Sexo:</h4>
+                        <select id="Genero" class="CaixaDados" name="sexo">
+                            <option value="Masculino" <%=alunos.Sexo=='Masculino' ? 'selected' : '' %>>Masculino
                             </option>
+                            <option value="Feminino" <%=alunos.Sexo=='Feminino' ? 'selected' : '' %>>Feminino</option>
+                        </select>
+                    </div>
+                    <div>
+                        <h4>Sala:</h4>
+                        <select name="sala" id="" class="CaixaDados">
+                            <% for(let i=0; i < salas.length; i++){ %>
+                                <% if (salas[i].IDSala==alunos.IDSala) { %> 
+                                    <option value="<%= salas[i].IDSala %>" selected> <%= salas[i].Nome %> </option> <% } %>
+                                <option value="<%= salas[i].IDSala %>"> <%= salas[i].Nome %> </option>
                             <% } %>
-                    </select>
-                </div>
+                        </select>
+                    </div>
 
-                <button type="submit" value="Atualizar">
-                    <h3>Atualizar</h3>
-                </button>
-            </form>
+                    <button type="submit" value="Atualizar">
+                        <h3 style="color: rgb(108, 238, 108); ">Atualizar</h3>
+                    </button>
+
+                </form>
+                <form action="/apagarAluno/<%= alunos.IDAluno %> " method="post">
+                    <button type="submit" value="Deletar">
+                        <h3 style="color: rgb(250, 86, 86); ">Deletar</h3>
+                    </button>
+                </form>
+                <a href="/">
+                    <button>
+                        <h3>Voltar</h3>
+                    </button>
+                </a>
+            </div>
         </div>
-    </div>
     </main>
 
 

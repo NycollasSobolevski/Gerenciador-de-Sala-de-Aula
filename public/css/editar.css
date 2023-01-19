@@ -7,14 +7,18 @@ body{
     height: 100%;
 }
 body button{
-    box-shadow: 0px 0px 10px black;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0);
     background: -webkit-linear-gradient(0deg, rgba(243,20,25,1) 0%, rgba(50,42,119,1) 50%, rgba(54,167,199,1) 100%);
-    color: white;
+    color: #ffffff;
     width: 100px;
     height: 30px;
     border-radius: 15px;
     transition: all 500ms;
 }
+body button h3{
+    text-shadow: 0px 0px 2px #090909;
+}
+
 header{
     display: flex;
     flex-direction: column;
@@ -77,7 +81,6 @@ header{
 }
 
 
-
 main{
     display: flex;
     /* flex-direction: column; */
@@ -111,9 +114,7 @@ main{
     width: 60px;
     height: 30px;
     border-radius: 10px;
-}
-.Blur{
-    filter: blur(3px);
+    text-shadow: 0 ,0, 10px white;
 }
 .Cadastro{
     background-color: rgb(247, 247, 247);
@@ -161,8 +162,10 @@ main{
     border: 2px;
     border-radius: 5px;
     border-style: solid;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-.Cadastro button{
+/* .Cadastro button{
     box-shadow: 0px 0px 10px black;
     background: -webkit-linear-gradient(0deg, rgba(243,20,25,1) 0%, rgba(50,42,119,1) 50%, rgba(54,167,199,1) 100%);
     color: white;
@@ -170,7 +173,7 @@ main{
     height: 30px;
     border-radius: 15px;
     transition: all 500ms;
-}
+} */
 .Cadastro button:hover{
     scale: 1.05;
     cursor: pointer;
