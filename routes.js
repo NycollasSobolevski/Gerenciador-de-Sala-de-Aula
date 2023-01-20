@@ -18,9 +18,11 @@ route.post('/', home.pagInicialPost);
 
 route.get('/', cadastro.sala);
 route.post('/cadastroSala', cadastro.salaInsert);
+route.post('/salaInsert', cadastro.openInsertSala);
 
 route.get('/', cadastro.aluno);
 route.post('/cadastroAluno', multer(config).single('foto'), cadastro.alunoInsert);
+route.post('/alunoInsert', cadastro.openInsertAluno);
 
 route.get('/editarAluno/:id', editar.alunos);
 route.post('/editarAluno/:id', multer(config).single('foto'), editar.adicionar);

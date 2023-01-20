@@ -1,14 +1,3 @@
-function AbrirCadastro(id) {
-    CleanScreen()
-    document.getElementById(id).style.display = 'flex'
-    var elemento = document.getElementById(id)
-    if(elemento.style.display == 'none') {
-        document.getElementById('main').classList.remove('Blur')
-    }
-    if(elemento.style.display == 'flex') {
-        document.getElementById('main').classList.add('Blur')
-    }
-}
 function FecharCadastro(id) {
     document.getElementById(id).style.display = 'none'
     CleanScreen()

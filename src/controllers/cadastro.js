@@ -8,6 +8,54 @@ module.exports = {
         res.render('../views/index')
     },
 
+    async openInsertSala(req, res){
+        const salas = await sala.findAll({
+            raw: true,  // Retorna somente os valores de uma tabela, sem metadados
+            atributes: ['IDSala', 'Nome', 'Capacidade']
+        });
+
+        let alunos = await aluno.findAll({
+            raw: true,
+            atributes: ['Nome', 'Nascimento', 'Foto', 'IDSala']
+        });
+        alunos = alunos.map(aluno => {
+            const date = new Date();
+            const sla = new Date(aluno.Nascimento);
+
+            const dias = (date - sla) / 86400000
+            const anos = dias / 365
+            aluno.Idade = Math.round(anos)
+
+            return aluno
+        })
+
+        res.render('../views/index', { alunos, salas, id:'', frase:'', alunoIns: false, salaIns: true })
+    },
+
+    async openInsertAluno(req, res){
+        const salas = await sala.findAll({
+            raw: true,  // Retorna somente os valores de uma tabela, sem metadados
+            atributes: ['IDSala', 'Nome', 'Capacidade']
+        });
+
+        let alunos = await aluno.findAll({
+            raw: true,
+            atributes: ['Nome', 'Nascimento', 'Foto', 'IDSala']
+        });
+        alunos = alunos.map(aluno => {
+            const date = new Date();
+            const sla = new Date(aluno.Nascimento);
+
+            const dias = (date - sla) / 86400000
+            const anos = dias / 365
+            aluno.Idade = Math.round(anos)
+
+            return aluno
+        })
+
+        res.render('../views/index', { alunos, salas, id:'', frase:'', alunoIns: true, salaIns: false  })
+    },
+
     async salaInsert(req, res){
         // recebe as info do front
         const dados = req.body;
@@ -78,8 +126,29 @@ module.exports = {
             
             res.redirect('/');
         }
-        console.log('nao entrou');
-        res.redirect('/');
+
+        const salas = await sala.findAll({
+            raw: true,  // Retorna somente os valores de uma tabela, sem metadados
+            atributes: ['IDSala', 'Nome', 'Capacidade']
+        });
+
+        let alunos = await aluno.findAll({
+            raw: true,
+            atributes: ['Nome', 'Nascimento', 'Foto', 'IDSala']
+        });
+        alunos = alunos.map(aluno => {
+            const date = new Date();
+            const sla = new Date(aluno.Nascimento);
+
+            const dias = (date - sla) / 86400000
+            const anos = dias / 365
+            aluno.Idade = Math.round(anos)
+
+            return aluno
+        })
+
+        
+        res.render('../views/index', { alunos, salas, id:'', frase:'Idade incompatível com o curso selecionado', alunoIns: false , salaIns: false })
     }
 }
 

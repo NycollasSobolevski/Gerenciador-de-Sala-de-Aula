@@ -10,7 +10,7 @@
 
     <link rel="icon" type="image" href="/bzo/media/css/img/favicon.png" />
     <link rel="stylesheet" href="css/style.css">
-    
+
     <script src="js/script.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,22 +32,28 @@
             <div class="">
                 <div class="HeaderFunctions">
                     <h3>Cadastrar:</h3>
-                    <a href="javascript: AbrirCadastro('CadastroAluno')">
-                        <h4>Alunos</h4>
-                    </a>
-                    <h3>|</h3>
-                    <a href="javascript: AbrirCadastro('CadastroSala')">
-                        <h4>Sala</h4>
-                    </a>
+                    <div>
+                        <form method="post" action="/alunoInsert">
+                            <button style="width: 75px;" type="submit">
+                                Aluno
+                            </button>
+                        </form>
+                        <h3>|</h3>
+                        <form action="/salaInsert" method="post">
+                            <button style="width: 75px;" type="submit">
+                                Sala
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <main onclick="CleanScreen()" id="main">
+    <main onclick="CleanScreen()" id="main" class="<%= alunoIns || salaIns ? " Blur" : "" %>">
         <div class="SelectSala">
             <h5>Sala de Aula</h5>
-            <form method="post">
+            <form method="post" action="/">
                 <select name="SelectSala" onchange="this.form.submit()" id="SelectSala">
                     <option value="" selected>Todas</option>
                     <% for(let i=0; i < salas.length; i++){ %>
@@ -60,24 +66,22 @@
         </div>
         <div class="dadosSala">
             <div>
-                <% if(id!=''){ %> 
-                <form action="/editarSalas/<%= id %> " method="get">
-                    <button>
-                        <h3>Editar Sala</h3>
-                    </button>
-                </form>
-                <p>
-                    <% let b=0 ;%>
-                        <% for(let i=0; i<salas.length; i++) {%>
-                            <% if(salas[i].IDSala==id){ b=salas[i].Capacidade}%>
-                                <% } %>
-                                    <%= id!=0 ? salaSelecionada[0].Capacidade - alunos.length : '' %> Vagas disponiveis
-                </p>
-                <% } %> 
+                <% if(id!='' ){ %>
+                    <form action="/editarSalas/<%= id %> " method="get">
+                        <button>
+                            <h3>Editar Sala</h3>
+                        </button>
+                    </form>
+                    <p>
+                        <% let b=0 ;%>
+                            <% for(let i=0; i<salas.length; i++) {%>
+                                <% if(salas[i].IDSala==id){ b=salas[i].Capacidade}%>
+                                    <% } %>
+                                        <%= id!=0 ? salaSelecionada[0].Capacidade - alunos.length : '' %> Vagas
+                                            disponiveis
+                    </p>
+                    <% } %>
             </div>
-        </div>
-        <div class="">
-            <h2><%= frase %> </h2>
         </div>
         <div id="Sala" class="Sala">
             <h2>Alunos </h2>
@@ -91,7 +95,7 @@
                             <h3>
                                 <%= alunos[i].Nome %>
                             </h3>
-                            <p>Idade: <%= alunos[i].Idade %> 
+                            <p>Idade: <%= alunos[i].Idade %>
                             </p>
                             <form action="/editarAluno/<%= alunos[i].IDAluno %> " method="get">
                                 <button class="Button">Editar</button>
@@ -103,12 +107,7 @@
         </div>
     </main>
 
-
-
-
-
-
-    <div id="CadastroSala" class="Cadastro">
+    <div id="CadastroSala" class="Cadastro" style='<%= salaIns ? "display: flex;" : "display: none;" %>'>
         <form action="/cadastroSala" method="post">
             <div class="Content">
                 <h2>Cadastrar Nova Sala</h2>
@@ -122,11 +121,13 @@
                 </div>
                 <div>
                     <h4>Idade Minima</h4>
-                    <input type="number" class="CaixaDados" name="idadeMinima" id="idadeMaxima" placeholder="idadeMaxima"></input>
+                    <input type="number" class="CaixaDados" name="idadeMinima" id="idadeMaxima"
+                        placeholder="idadeMaxima"></input>
                 </div>
                 <div>
                     <h4>Idade Maxima</h4>
-                    <input type="number" class="CaixaDados" name="idadeMaxima" id="idadeMinima" placeholder="idadeMinima"></input>
+                    <input type="number" class="CaixaDados" name="idadeMaxima" id="idadeMinima"
+                        placeholder="idadeMinima"></input>
                 </div>
                 <button type="submit">
                     <h3>Cadastrar</h3>
@@ -139,7 +140,7 @@
 
     </div>
 
-    <div id="CadastroAluno" class="Cadastro">
+    <div id="CadastroAluno" class="Cadastro" style='<%= alunoIns ? "display: flex;" : "display: none;" %>'>
         <div class="Content">
             <form action="/cadastroAluno" method="post" enctype="multipart/form-data">
                 <h2>Cadastrar Novo Aluno</h2>
@@ -151,8 +152,12 @@
                 </div>
                 <div>
                     <h4>Nascimento:</h4>
-                    <input id="dataNasc" type="date" onchange="console.log(typeof(this.value))" class="CaixaDados" placeholder="Idade" name="nascimento" required></input>
+                    <input id="dataNasc" type="date" onchange="validaData()" class="CaixaDados" placeholder="Idade"
+                        name="nascimento" required></input>
                 </div>
+                <p style="color: red;">
+                    <%= frase %>
+                </p>
                 <div>
                     <h4>Genero:</h4>
                     <select id="Genero" class="CaixaDados" aria-placeholder="Sexo" name="sexo" required>
@@ -162,17 +167,17 @@
                 </div>
                 <div>
                     <h4>Sala:</h4>
-                    <select name="salaSelect" id="" aria-placeholder="Sala" class="CaixaDados">
+                    <select name="salaSelect" id="Sala-cadastro" aria-placeholder="Sala" class="CaixaDados">
                         <% for(let i=0; i < salas.length; i++){ %>
-                            <% if(salas[i].Capacidade >= alunos.length ){ %> 
-                            <option value="<%= salas[i].IDSala %>">
-                                <%= salas[i].Nome %>
-                            </option>
+                            <% if(salas[i].Capacidade > alunos.length ){ %>
+                                <option value="<%= salas[i].IDSala %>">
+                                    <%= salas[i].Nome %>
+                                </option>
                             <% } %>
                         <% } %>
                     </select>
                 </div>
-                <button onclick="validaData(event)" type="submit">
+                <button type="submit">
                     <h3>Cadastrar</h3>
                 </button>
             </form>

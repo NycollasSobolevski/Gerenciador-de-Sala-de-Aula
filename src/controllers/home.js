@@ -26,7 +26,7 @@ module.exports = {
         })
 
         // renderizando as salas para o front
-        res.render('../views/index.ejs', {salas, alunos, id:'',salaSelecionada:'', frase:''});
+        res.render('../views/index.ejs', {salas, alunos, id:'',salaSelecionada:'', frase:'', alunoIns: false , salaIns: false });
     },
 
     async pagInicialPost(req, res){
@@ -34,7 +34,7 @@ module.exports = {
 
         const salas = await sala.findAll({
             raw:true,
-            atributes: ['IDSala','Nome', 'Capacidade']
+            atributes: ['IDSala','Nome', 'Capacidade', 'IdadeMinima', 'IdadeMaxima']
         });
 
         const salaSelecionada = await sala.findAll({
@@ -60,7 +60,7 @@ module.exports = {
                 return aluno;
             });
     
-            res.render('../views/index.ejs', { salas, salaSelecionada, alunos, id, frase:''});
+            res.render('../views/index.ejs', { salas, salaSelecionada, alunos, id, frase:'', alunoIns: false, salaIns: false });
         }
         let alunos = await aluno.findAll({
             raw: true,
@@ -79,6 +79,6 @@ module.exports = {
             return aluno;
         });
 
-        res.render('../views/index.ejs', { salas, salaSelecionada, alunos, id, frase:''});
+        res.render('../views/index.ejs', { salas, salaSelecionada, alunos, id, frase:'', alunoIns: false, salaIns: false  });
     }
 }
